@@ -24,13 +24,22 @@ module.exports = function setupRoutes(proxyServer, sessionStore, logger) {
     if (process.env.DEVELOPMENT) {
         proxyServer.GET('/garbageCollect', (req, res) => {
             global.gc();
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.setHeader('Access-Control-Allow-Methods', '*');
+            res.setHeader("Access-Control-Allow-Headers", "*");
             res.end('Ok');
         });
     }
     proxyServer.GET('/needpassword', (req, res) => {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader('Access-Control-Allow-Methods', '*');
+        res.setHeader("Access-Control-Allow-Headers", "*");
         res.end(config.password ? 'true' : 'false');
     });
     proxyServer.GET('/newsession', (req, res) => {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader('Access-Control-Allow-Methods', '*');
+        res.setHeader("Access-Control-Allow-Headers", "*");
         if (isNotAuthorized(req, res)) return;
 
         const id = generateId();
@@ -42,6 +51,9 @@ module.exports = function setupRoutes(proxyServer, sessionStore, logger) {
         res.end(id);
     });
     proxyServer.GET('/editsession', (req, res) => {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader('Access-Control-Allow-Methods', '*');
+        res.setHeader("Access-Control-Allow-Headers", "*");
         if (isNotAuthorized(req, res)) return;
 
         let { id, httpProxy, enableShuffling } = new URLPath(req.url).getParams();
@@ -70,6 +82,9 @@ module.exports = function setupRoutes(proxyServer, sessionStore, logger) {
         res.end('Success');
     });
     proxyServer.GET('/deletesession', (req, res) => {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader('Access-Control-Allow-Methods', '*');
+        res.setHeader("Access-Control-Allow-Headers", "*");
         if (isNotAuthorized(req, res)) return;
 
         const { id } = new URLPath(req.url).getParams();
@@ -83,6 +98,9 @@ module.exports = function setupRoutes(proxyServer, sessionStore, logger) {
         res.end('Success');
     });
     proxyServer.GET('/sessionexists', (req, res) => {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader('Access-Control-Allow-Methods', '*');
+        res.setHeader("Access-Control-Allow-Headers", "*");
         const id = new URLPath(req.url).get('id');
         if (!id) {
             httpResponse.badRequest(logger, req, res, config.getIP(req), 'Must specify id parameter');
@@ -91,6 +109,9 @@ module.exports = function setupRoutes(proxyServer, sessionStore, logger) {
         }
     });
     proxyServer.GET('/mainport', (req, res) => {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader('Access-Control-Allow-Methods', '*');
+        res.setHeader("Access-Control-Allow-Headers", "*");
         const serverInfo = config.getServerInfo(req);
         res.end((serverInfo.port || '').toString());
     });

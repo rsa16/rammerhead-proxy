@@ -1,3 +1,7 @@
+const fs = require('fs')
+const gracefulFS = require('graceful-fs')
+gracefulFS.gracefulify(fs)
+
 const cluster = require('cluster');
 if (cluster.isMaster) {
     require('dotenv-flow').config();

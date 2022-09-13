@@ -25,6 +25,10 @@
   "homepage": "https://github.com/binary-person/rammerhead#readme",
   "dependencies": {
     "async-exit-hook": "^2.0.1",
+    "graceful-fs": "^4.2.10",
+    "graceful-js": "^1.0.0",
+    "jquery": "^3.6.1",
+    "jsdom": "^20.0.0",
     "keyv-lru-files": "github:binary-person/keyv-lru-files#patch-1",
     "mime": "^2.5.2",
     "sticky-session-custom": "^1.2.0",

@@ -93,7 +93,10 @@
         };
         request.onload = function () {
             if (request.status === 200) {
-                callback(request.responseText);
+                if (callback)
+                {
+                    callback(request.responseText);
+                }
             } else {
                 if (!shush)
                     setError(
@@ -118,7 +121,10 @@
                 '&enableShuffling=' + (enableShuffling ? '1' : '0'),
                 function (res) {
                     if (res !== 'Success') return setError('unexpected response from server. received ' + res);
-                    callback();
+                    if (callback)
+                    {
+                        callback();
+                    }
                 }
             );
         },
@@ -135,16 +141,26 @@
                     get('/deletesession?id=' + id, function (res) {
                         if (res !== 'Success' && res !== 'not found')
                             return setError('unexpected response from server. received ' + res);
-                        callback();
+                        
+                        if (callback)
+                        {
+                            callback();
+                        }
                     });
                 } else {
-                    callback();
+                    if (callback)
+                    {
+                        callback();
+                    }
                 }
             });
         },
         shuffleDict(id, callback) {
             get('/api/shuffleDict?id=' + encodeURIComponent(id), function (res) {
-                callback(JSON.parse(res));
+                if (callback)
+                {
+                    callback(JSON.parse(res));
+                }
             });
         }
     };

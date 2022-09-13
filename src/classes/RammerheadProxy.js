@@ -155,7 +155,10 @@ class RammerheadProxy extends Proxy {
             'feature-policy': (headerValue) => headerValue && headerValue.replace(/sync-xhr/g, 'sync-yes'),
             'referrer-policy': () => 'no-referrer-when-downgrade',
             'report-to': () => undefined,
-            'cross-origin-embedder-policy': () => undefined
+            'cross-origin-embedder-policy': () => undefined,
+            'access-control-allow-origin': () => "*",
+            'access-control-allow-methods': () => "*",
+            'access-control-allow-headers': () => "*"
         };
 
         this.getServerInfo = getServerInfo;
@@ -426,6 +429,9 @@ class RammerheadProxy extends Proxy {
             contentType: 'application/x-javascript'
         });
         this.GET('/api/shuffleDict', (req, res) => {
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.setHeader('Access-Control-Allow-Methods', '*');
+            res.setHeader("Access-Control-Allow-Headers", "*");
             const { id } = new URLPath(req.url).getParams();
             if (!id || !this.openSessions.has(id)) {
                 return httpResponse.badRequest(this.logger, req, res, this.loggerGetIP(req), 'Invalid session id');

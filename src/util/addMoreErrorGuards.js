@@ -22,6 +22,7 @@ hGuard.isConnectionResetError = function (err) {
 process.on('uncaughtException', (err) => {
     // for some reason, the above never catches all of the errors. this is a last resort failsafe
     if (
+        err.message.includes('ECONNRESET') ||
         err.message.includes('ECONN') ||
         err.message.includes('EPIPE') ||
         err.message.includes('ETIMEDOUT') ||
